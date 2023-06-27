@@ -13,13 +13,21 @@ connection_params = pika.ConnectionParameters(
         password='guest'),
 )
 
+
+
 @shared_task
 def send_message(message):
     channel = pika.BlockingConnection(connection_params).channel()
-    channel.channel()
     channel.queue_declare(queue='my_queue', durable=True)
-    time.sleep(5)
-    channel.basic_publish(body=message, exchange='', routing_key='my_queue')
+    channel.basic_publish(
+        body=message, 
+        exchange='my_exchanges', 
+        routing_key='', 
+        properties=pika.BasicProperties(
+            delivery_mode=2
+        )
+        )
+    
     channel.close()
-    return message
+    
     

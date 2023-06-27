@@ -8,8 +8,10 @@ from .tasks import send_message
 class User(models.Model):
     username = models.CharField(max_length=50)
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        message = instance.username
+    def __str__(self):
+        return self.username
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        message = self.username
         send_message.delay(message)
