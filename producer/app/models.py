@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from .tasks import send_message
+from .views import send_message_view
 
 # Create your models here.
 
@@ -14,4 +15,4 @@ class User(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
         message = self.username
-        send_message.delay(message)
+        send_message_view(None, message)

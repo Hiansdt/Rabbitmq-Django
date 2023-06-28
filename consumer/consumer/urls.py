@@ -17,7 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app.tasks import consume_message, my_callback
-from appProducer.tasks import send_message
 
 urlpatterns = [
     path('admin/', admin.site.urls),
