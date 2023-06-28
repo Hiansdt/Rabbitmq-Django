@@ -3,9 +3,9 @@ import os
 
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'producer.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'consumer.settings')
 
-app = Celery('producer', broker='amqp://guest:guest@localhost:5672//')
+app = Celery('consumer', broker='amqp://guest:guest@localhost:5672//')
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
